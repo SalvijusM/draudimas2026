@@ -1,22 +1,23 @@
 <?php
 
-namespace database\seeders;
+namespace Database\Seeders;
 
 use App\Models\Owner;
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::factory()->admin()->create();
 
-        Owner::factory(10)->create()->each(function ($owner) {
+        User::factory()->count(4)->create();
 
-            $carCount = rand(1, 3);
-
-            Car::factory($carCount)->create([
-                'owner_id' => $owner->id
+        Owner::factory()->count(10)->create()->each(function ($owner) {
+            Car::factory()->count(rand(1, 3))->create([
+                'owner_id' => $owner->id,
             ]);
         });
     }

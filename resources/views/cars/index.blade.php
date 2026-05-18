@@ -4,7 +4,9 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Automobilių sąrašas</h2>
-            <a href="{{ route('cars.create') }}" class="btn btn-primary">Pridėti naują</a>
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ route('cars.create') }}" class="btn btn-primary">Pridėti naują</a>
+            @endif
         </div>
 
         @if(session('success'))
@@ -35,13 +37,17 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">Redaguoti</a>
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">Redaguoti</a>
 
-                        <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Ar tikrai norite ištrinti šį automobilį?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Trinti</button>
-                        </form>
+                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Ar tikrai norite ištrinti šį automobilį?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Trinti</button>
+                            </form>
+                        @else
+                            <span class="text-muted small">Veiksmai negalimi</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach

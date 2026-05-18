@@ -32,7 +32,7 @@ class CarFactory extends Factory
             'reg_number' => strtoupper($this->faker->bothify('???###')),
             'brand' => $brand,
             'model' => $model,
-            'owner_id' => null, // Bus priskirta seeder'yje
+            'owner_id' => null,
         ];
     }
 }
