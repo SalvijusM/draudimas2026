@@ -31,4 +31,7 @@ return [
     'confirm_delete' => 'Are you sure you want to delete this car?',
     'confirm_delete_owner' => 'Are you sure you want to delete this owner?',
     'no_permission' => 'You do not have permission to access this page.',
+    'car_created_success' => 'Car created successfully!',
+    'car_updated_success' => 'Car updated successfully!',
+    'car_deleted_success' => 'Car deleted successfully!',
 ];

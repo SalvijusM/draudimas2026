@@ -3,83 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
-use App\Models\Owner; // Reikės, kad galėtume pasirinkti savininką kuriant automobilį
-use Illuminate\Http\Request;
+use App\Models\Owner;
+use App\Http\Requests\StoreCarRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CarController extends Controller
 {
-    /**
-     * Rodo visų automobilių sąrašą.
-     */
-    public function index()
+    public function index(): View
     {
-
         $cars = Car::with('owner')->get();
 
         return view('cars.index', compact('cars'));
     }
-
-    /**
-     * Rodo automobilio kūrimo formą.
-     */
-    public function create()
+    public function create(): View
     {
-
         $owners = Owner::all();
 
         return view('cars.create', compact('owners'));
     }
-
-    /**
-     * Išsaugoti naują automobilį duomenų bazėje.
-     */
-    public function store(Request $request)
+    public function store(StoreCarRequest $request): RedirectResponse
     {
-        $request->validate([
-            'reg_number' => 'required|unique:cars,reg_number|max:20',
-            'brand' => 'required|string|max:254',
-            'model' => 'required|string|max:254',
-            'owner_id' => 'required|exists:owners,id', // Tikrina, ar toks savininkas tikrai egzistuoja
-        ]);
+        Car::create($request->validated());
 
-        Car::create($request->all());
-
-        return redirect()->route('cars.index')->with('success', 'Automobilis sėkmingai pridėtas!');
+        return redirect()->route('cars.index')
+            ->with('success', __('messages.car_created_success'));
     }
-
-    /**
-     * Rodo automobilio redagavimo formą.
-     */
-    public function edit(Car $car)
+    public function edit(Car $car): View
     {
         $owners = Owner::all();
+
         return view('cars.edit', compact('car', 'owners'));
     }
-
-    /**
-     * Atnaujina automobilio duomenis.
-     */
-    public function update(Request $request, Car $car)
+    public function update(StoreCarRequest $request, Car $car): RedirectResponse
     {
-        $request->validate([
-            'reg_number' => 'required|max:20|unique:cars,reg_number,' . $car->id, // Leidžia pasilikti tą patį numerį redaguojant
-            'brand' => 'required|string|max:254',
-            'model' => 'required|string|max:254',
-            'owner_id' => 'required|exists:owners,id',
-        ]);
+        $car->update($request->validated());
 
-        $car->update($request->all());
-
-        return redirect()->route('cars.index')->with('success', 'Automobilio duomenys atnaujinti!');
+        return redirect()->route('cars.index')
+            ->with('success', __('messages.car_updated_success'));
     }
 
-    /**
-     * Ištrina automobilį.
-     */
-    public function destroy(Car $car)
+    public function destroy(Car $car): RedirectResponse
     {
         $car->delete();
 
-        return redirect()->route('cars.index')->with('success', 'Automobilis pašalintas.');
+        return redirect()->route('cars.index')
+            ->with('success', __('messages.car_deleted_success'));
     }
 }

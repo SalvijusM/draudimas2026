@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth; // Pridėtas Auth fasado importas
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Session;
 
 Route::get('lang/{locale}', function ($locale) {
@@ -19,15 +20,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('owners', OwnerController::class)->except(['index', 'show']);
+        Route::resource('cars', CarController::class)->except(['index', 'show']);
+    });
+
     Route::resource('owners', OwnerController::class)->only(['index', 'show']);
     Route::resource('cars', CarController::class)->only(['index', 'show']);
-});
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('owners', OwnerController::class)->except(['index', 'show']);
-    Route::resource('cars', CarController::class)->except(['index', 'show']);
 });

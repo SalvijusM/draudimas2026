@@ -31,4 +31,7 @@ return [
     'confirm_delete' => 'Ar tikrai norite ištrinti šį automobilį?',
     'confirm_delete_owner' => 'Ar tikrai norite ištrinti šį savininką?',
     'no_permission' => 'Jūs neturite teisės peržiūrėti šio puslapio.',
+    'car_created_success' => 'Automobilis sėkmingai pridėtas!',
+    'car_updated_success' => 'Automobilio duomenys atnaujinti!',
+    'car_deleted_success' => 'Automobilis pašalintas.',
 ];
