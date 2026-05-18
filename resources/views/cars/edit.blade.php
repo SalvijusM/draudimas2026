@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container mt-4">
-        <h2>Redaguoti automobilį</h2>
-        <a href="{{ route('cars.index') }}" class="btn btn-secondary mb-3">Atgal</a>
+        <h2>{{ __('messages.edit_car') }}</h2>
+        <a href="{{ route('cars.index') }}" class="btn btn-secondary mb-3">{{ __('messages.back') }}</a>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -20,19 +20,19 @@
             @method('PUT')
 
             <div class="mb-3">
-                <label class="form-label">Valstybinis numeris</label>
+                <label class="form-label">{{ __('messages.reg_number') }}</label>
                 <input type="text" name="reg_number" value="{{ $car->reg_number }}" class="form-control text-uppercase" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Markė (Brand)</label>
+                <label class="form-label">{{ __('messages.brand') }}</label>
                 <input type="text" name="brand" value="{{ $car->brand }}" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Modelis</label>
+                <label class="form-label">{{ __('messages.model') }}</label>
                 <input type="text" name="model" value="{{ $car->model }}" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Savininkas</label>
+                <label class="form-label">{{ __('messages.owner') }}</label>
                 <select name="owner_id" class="form-select" required>
                     @foreach($owners as $owner)
                         <option value="{{ $owner->id }}" {{ $car->owner_id == $owner->id ? 'selected' : '' }}>
@@ -41,7 +41,7 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Atnaujinti</button>
+            <button type="submit" class="btn btn-primary">{{ __('messages.update') }}</button>
         </form>
     </div>
 @endsection

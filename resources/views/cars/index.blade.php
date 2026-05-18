@@ -3,9 +3,9 @@
 @section('content')
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Automobilių sąrašas</h2>
+            <h2>{{ __('messages.cars_list') }}</h2>
             @if(auth()->user()->role === 'admin')
-                <a href="{{ route('cars.create') }}" class="btn btn-primary">Pridėti naują</a>
+                <a href="{{ route('cars.create') }}" class="btn btn-primary">{{ __('messages.add_new') }}</a>
             @endif
         </div>
 
@@ -16,11 +16,11 @@
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Valstybinis Nr.</th>
-                <th>Markė (Brand)</th>
-                <th>Modelis</th>
-                <th>Savininkas</th>
-                <th>Veiksmai</th>
+                <th>{{ __('messages.reg_number') }}</th>
+                <th>{{ __('messages.brand') }}</th>
+                <th>{{ __('messages.model') }}</th>
+                <th>{{ __('messages.owner') }}</th>
+                <th>{{ __('messages.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -33,20 +33,20 @@
                         @if($car->owner)
                             {{ $car->owner->name }} {{ $car->owner->surname }}
                         @else
-                            <span class="text-muted">Savininkas nepriskirtas</span>
+                            <span class="text-muted">{{ __('messages.no_owner_assigned') }}</span>
                         @endif
                     </td>
                     <td>
                         @if(auth()->user()->role === 'admin')
-                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">Redaguoti</a>
+                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">{{ __('messages.edit') }}</a>
 
-                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Ar tikrai norite ištrinti šį automobilį?')">
+                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete') }}')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Trinti</button>
+                                <button type="submit" class="btn btn-sm btn-danger">{{ __('messages.delete') }}</button>
                             </form>
                         @else
-                            <span class="text-muted small">Veiksmai negalimi</span>
+                            <span class="text-muted small">{{ __('messages.actions_disabled') }}</span>
                         @endif
                     </td>
                 </tr>

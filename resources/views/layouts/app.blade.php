@@ -27,14 +27,24 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('owners.index') }}">Savininkai</a>
+                        <a class="nav-link" href="{{ route('owners.index') }}">{{ __('messages.owners') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cars.index') }}">Automobiliai</a>
+                        <a class="nav-link" href="{{ route('cars.index') }}">{{ __('messages.cars') }}</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown me-3">
+                        <a id="navbarDropdownLang" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            🌐 {{ strtoupper(app()->getLocale()) }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownLang">
+                            <a class="dropdown-item {{ app()->getLocale() == 'lt' ? 'active' : '' }}" href="{{ route('lang.switch', 'lt') }}">Lietuvių</a>
+                            <a class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}" href="{{ route('lang.switch', 'en') }}">English</a>
+                        </div>
+                    </li>
+
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item">

@@ -4,6 +4,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; // Pridėtas Auth fasado importas
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CarController;
+use Illuminate\Support\Facades\Session;
+
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'lt'])) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 Route::get('/', function () {
     return redirect()->route('owners.index');
