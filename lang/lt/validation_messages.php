@@ -9,4 +9,8 @@ return [
     'owner_not_found'     => 'Pasirinktas savininkas neegzistuoja sistemoje.',
     'brand_too_short'     => 'Markė per trumpa',
     'model_too_short'     => 'Modelis per trumpas',
+    'photos_must_be_array' => 'Nuotraukos turi būti pateiktos kaip sąrašas.',
+    'photo_must_be_image' => 'Pasirinktas failas privalo būti paveikslėlis.',
+    'photo_invalid_format' => 'Leidžiami tik JPEG, PNG, JPG ir GIF formato failai.',
+    'photo_too_large' => 'Nuotrauka per didelė. Maksimalus leidžiamas dydis yra 2 MB.',
 ];

@@ -34,4 +34,8 @@ return [
     'car_created_success' => 'Automobilis sėkmingai pridėtas!',
     'car_updated_success' => 'Automobilio duomenys atnaujinti!',
     'car_deleted_success' => 'Automobilis pašalintas.',
+    'current_photos' => 'Esamos automobilio nuotraukos',
+    'upload_photos' => 'Įkelti naujas nuotraukas',
+    'confirm_photo_delete' => 'Ar tikrai norite ištrinti šią nuotrauką?',
+    'photo_deleted_success' => 'Nuotrauka sėkmingai ištrinta.',
 ];

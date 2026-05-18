@@ -14,10 +14,10 @@
                 </ul>
             </div>
         @endif
-
-        <form action="{{ route('cars.update', $car->id) }}" method="POST">
+        <form action="{{ route('cars.update', $car->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
             <div class="mb-3">
                 <label for="reg_number" class="form-label">{{ __('messages.reg_number') }}</label>
                 <input type="text"
@@ -42,8 +42,6 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
-            {{-- Modelis --}}
             <div class="mb-3">
                 <label for="model" class="form-label">{{ __('messages.model') }}</label>
                 <input type="text"
@@ -55,6 +53,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="owner_id" class="form-label">{{ __('messages.owner') }}</label>
                 <select name="owner_id" id="owner_id" class="form-select @error('owner_id') is-invalid @enderror">
@@ -69,7 +68,57 @@
                 @enderror
             </div>
 
+            <hr>
+            @if($car->photos && $car->photos->count() > 0)
+                <div class="mb-4">
+                    <label class="form-label fw-bold">{{ __('messages.current_photos') ?? 'Esamos nuotraukos' }}</label>
+                    <div class="row">
+                        @foreach($car->photos as $photo)
+                            <div class="col-6 col-md-3 mb-3 text-center">
+                                <div class="card p-2 h-100 shadow-sm">
+                                    <img src="{{ asset('storage/' . $photo->folder_path) }}"
+                                         class="img-thumbnail mb-2 mx-auto"
+                                         style="height: 120px; width: 100%; object-fit: cover;"
+                                         alt="Car photo">
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm mt-auto"
+                                            onclick="if(confirm('{{ __('messages.confirm_photo_delete') ?? 'Ar tikrai norite ištrinti šią nuotrauką?' }}')) { document.getElementById('delete-photo-{{ $photo->id }}').submit(); }">
+                                        {{ __('messages.delete') ?? 'Ištrinti' }}
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            <div class="mb-4">
+                <label for="photos" class="form-labelfw-bold">{{ __('messages.upload_photos') ?? 'Įkelti naujas nuotraukas' }}</label>
+                <input type="file"
+                       name="photos[]"
+                       id="photos"
+                       class="form-control @error('photos') is-invalid @enderror @error('photos.*') is-invalid @enderror"
+                       multiple
+                       accept="image/*">
+                <div class="form-text text-muted">Galite pasirinkti kelias nuotraukas iš karto (JPEG, PNG, JPG, GIF). Maks. 2MB.</div>
+                @error('photos')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+                @error('photos.*')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <hr>
+
             <button type="submit" class="btn btn-primary">{{ __('messages.update') }}</button>
         </form>
+        @if($car->photos && $car->photos->count() > 0)
+            @foreach($car->photos as $photo)
+                <form id="delete-photo-{{ $photo->id }}" action="{{ route('cars.deletePhoto', $photo->id) }}" method="POST" class="d-none">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            @endforeach
+        @endif
     </div>
 @endsection

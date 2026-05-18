@@ -34,4 +34,8 @@ return [
     'car_created_success' => 'Car created successfully!',
     'car_updated_success' => 'Car updated successfully!',
     'car_deleted_success' => 'Car deleted successfully!',
+    'current_photos' => 'Current car photos',
+    'upload_photos' => 'Upload new photos',
+    'confirm_photo_delete' => 'Are you sure you want to delete this photo?',
+    'photo_deleted_success' => 'Photo deleted successfully.',
 ];

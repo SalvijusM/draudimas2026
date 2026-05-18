@@ -26,6 +26,9 @@ class StoreCarRequest extends FormRequest
             'brand' => 'required|string|min:3|max:50',
             'model' => 'required|string|min:2|max:50',
             'owner_id' => 'required|exists:owners,id',
+
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 
@@ -36,11 +39,15 @@ class StoreCarRequest extends FormRequest
             'reg_number.unique'   => __('validation_messages.reg_number_unique'),
             'reg_number.regex'    => __('validation_messages.reg_number_incorrect'),
             'brand.required'      => __('validation_messages.brand_required'),
-            'brand.min'           => __('validation_messages.brand_too_short', ['min' => 3]), // Pridėtas pranešimas
+            'brand.min'           => __('validation_messages.brand_too_short', ['min' => 3]),
             'model.required'      => __('validation_messages.model_required'),
-            'model.min'           => __('validation_messages.model_too_short', ['min' => 2]), // Pridėtas pranešimas
+            'model.min'           => __('validation_messages.model_too_short', ['min' => 2]),
             'owner_id.required'   => __('validation_messages.owner_required'),
             'owner_id.exists'     => __('validation_messages.owner_not_found'),
+            'photos.array'        => __('validation_messages.photos_must_be_array') ?? 'Nuotraukos turi būti pateiktos kaip masyvas.',
+            'photos.*.image'      => __('validation_messages.photo_must_be_image') ?? 'Pasirinktas failas turi būti paveikslėlis.',
+            'photos.*.mimes'      => __('validation_messages.photo_invalid_format') ?? 'Leidžiami tik JPEG, PNG, JPG ir GIF formatai.',
+            'photos.*.max'        => __('validation_messages.photo_too_large') ?? 'Nuotrauka negali būti didesnė nei 2MB.',
         ];
     }
 }
