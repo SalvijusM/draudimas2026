@@ -8,17 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class OwnerController extends Controller
 {
-    /**
-     * Užtikriname, kad tik prisijungę vartotojai gali pasiekti šį valdiklį.
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Rodo savininkų sąrašą priklausomai nuo rolės.
-     */
     public function index()
     {
         $user = Auth::user();
@@ -35,9 +29,6 @@ class OwnerController extends Controller
         return view('owners.index', compact('owners'));
     }
 
-    /**
-     * Rodo naujo savininko kūrimo formą.
-     */
     public function create()
     {
         // Tik Administratorius gali kurti naujus savininkus
@@ -48,9 +39,6 @@ class OwnerController extends Controller
         return view('owners.create');
     }
 
-    /**
-     * Išsaugo naują savininką duomenų bazėje.
-     */
     public function store(Request $request)
     {
         // Papildoma apsauga kontroleryje
@@ -72,9 +60,6 @@ class OwnerController extends Controller
         return redirect()->route('owners.index')->with('success', 'Savininkas pridėtas');
     }
 
-    /**
-     * Rodo savininko redagavimo formą.
-     */
     public function edit(Owner $owner)
     {
         $user = Auth::user();
@@ -90,9 +75,6 @@ class OwnerController extends Controller
         return view('owners.edit', compact('owner'));
     }
 
-    /**
-     * Atnaujina savininko duomenis.
-     */
     public function update(Request $request, Owner $owner)
     {
         $user = Auth::user();
@@ -119,9 +101,6 @@ class OwnerController extends Controller
         return redirect()->route('owners.index')->with('success', 'Informacija atnaujinta');
     }
 
-    /**
-     * Ištrina savininką.
-     */
     public function destroy(Owner $owner)
     {
         $user = Auth::user();

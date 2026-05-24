@@ -12,17 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
-    /**
-     * Užtikriname, kad tik prisijungę vartotojai pasiekia automobilių valdiklį.
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Rodo automobilių sąrašą pagal vaidmenis (rolės tekstinę reikšmę).
-     */
     public function index(): View
     {
         $user = auth()->user();
@@ -41,9 +36,6 @@ class CarController extends Controller
         return view('cars.index', compact('cars'));
     }
 
-    /**
-     * Rodo automobilio kūrimo formą.
-     */
     public function create(): View
     {
         $user = auth()->user();
@@ -61,9 +53,6 @@ class CarController extends Controller
         return view('cars.create', compact('owners'));
     }
 
-    /**
-     * Išsaugo naują automobilį.
-     */
     public function store(StoreCarRequest $request): RedirectResponse
     {
         $user = auth()->user();
@@ -93,9 +82,6 @@ class CarController extends Controller
             ->with('success', __('messages.car_created_success'));
     }
 
-    /**
-     * Rodo automobilio redagavimo formą.
-     */
     public function edit(Car $car): View
     {
         $user = auth()->user();
@@ -119,9 +105,7 @@ class CarController extends Controller
         return view('cars.edit', compact('car', 'owners'));
     }
 
-    /**
-     * Atnaujina automobilio informaciją.
-     */
+
     public function update(StoreCarRequest $request, Car $car): RedirectResponse
     {
         $user = auth()->user();
@@ -155,9 +139,7 @@ class CarController extends Controller
             ->with('success', __('messages.car_updated_success'));
     }
 
-    /**
-     * Ištrina automobilį ir jo nuotraukas iš diskų.
-     */
+
     public function destroy(Car $car): RedirectResponse
     {
         $user = auth()->user();
@@ -184,9 +166,7 @@ class CarController extends Controller
             ->with('success', __('messages.car_deleted_success'));
     }
 
-    /**
-     * Pašalina konkrečią automobilio nuotrauką.
-     */
+
     public function deletePhoto(CarPhoto $photo): RedirectResponse
     {
         $user = auth()->user();

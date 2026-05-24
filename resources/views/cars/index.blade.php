@@ -40,7 +40,7 @@
                         @if(auth()->user()->role === 'admin' || ($car->owner && $car->owner->user_id === auth()->id()))
                             <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">{{ __('messages.edit') }}</a>
 
-                            <form action="{{ route('cars.destroy', $car->id) }}" method=\"POST\" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete') }}')">
+                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete') }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">{{ __('messages.delete') }}</button>
