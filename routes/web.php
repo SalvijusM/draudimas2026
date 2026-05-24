@@ -24,14 +24,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::middleware(['admin'])->group(function () {
-        Route::resource('owners', OwnerController::class)->except(['index', 'show']);
-        Route::resource('cars', CarController::class)->except(['index', 'show']);
+    Route::resource('owners', OwnerController::class);
+    Route::resource('cars', CarController::class);
 
-        Route::delete('car-photos/{photo}', [CarController::class, 'deletePhoto'])->name('cars.deletePhoto');
-    });
-
-    Route::resource('owners', OwnerController::class)->only(['index', 'show']);
-    Route::resource('cars', CarController::class)->only(['index', 'show']);
+    Route::delete('car-photos/{photo}', [CarController::class, 'deletePhoto'])->name('cars.deletePhoto');
 
 });

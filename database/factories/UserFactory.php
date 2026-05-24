@@ -46,6 +46,16 @@ class UserFactory extends Factory
     }
 
     /**
+     * Papildoma būsena, skirta kurti paprastiems vartotojams.
+     */
+    public function regular(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'regular',
+        ]);
+    }
+
+    /**
      * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static

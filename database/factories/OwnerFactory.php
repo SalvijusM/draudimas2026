@@ -22,6 +22,7 @@ class OwnerFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
             'address' => $this->faker->address,
+            'user_id' => null,
         ];
     }
 }

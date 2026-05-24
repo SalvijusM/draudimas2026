@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>{{ __('messages.cars_list') }}</h2>
-            @if(auth()->user()->role === 'admin')
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'regular')
                 <a href="{{ route('cars.create') }}" class="btn btn-primary">{{ __('messages.add_new') }}</a>
             @endif
         </div>
@@ -37,10 +37,10 @@
                         @endif
                     </td>
                     <td>
-                        @if(auth()->user()->role === 'admin')
+                        @if(auth()->user()->role === 'admin' || ($car->owner && $car->owner->user_id === auth()->id()))
                             <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-sm btn-warning">{{ __('messages.edit') }}</a>
 
-                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete') }}')">
+                            <form action="{{ route('cars.destroy', $car->id) }}" method=\"POST\" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete') }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">{{ __('messages.delete') }}</button>

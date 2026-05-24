@@ -12,10 +12,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->admin()->create();
+        $viewers = User::factory()->count(2)->create();
+        $regulars = User::factory()->count(2)->regular()->create();
+        $allUsers = $viewers->concat($regulars);
+        Owner::factory()->count(10)->create()->each(function ($owner, $index) use ($allUsers) {
 
-        User::factory()->count(4)->create();
+            if ($index < $allUsers->count()) {
+                $owner->update([
+                    'user_id' => $allUsers[$index]->id
+                ]);
+            }
 
-        Owner::factory()->count(10)->create()->each(function ($owner) {
             Car::factory()->count(rand(1, 3))->create([
                 'owner_id' => $owner->id,
             ]);

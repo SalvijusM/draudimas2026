@@ -5,28 +5,46 @@
         <h2>{{ __('messages.add_new_owner') }}</h2>
         <a href="{{ route('owners.index') }}" class="btn btn-secondary mb-3">{{ __('messages.back') }}</a>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('owners.store') }}" method="POST">
             @csrf
+
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.first_name') }}</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.last_name') }}</label>
-                <input type="text" name="surname" class="form-control" required>
+                <input type="text" name="surname" value="{{ old('surname') }}" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.phone') }}</label>
-                <input type="text" name="phone" class="form-control" required>
+                <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.email') }}</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <label class="form-label">{{ __('messages.address') }}</label>
-                <textarea name="address" class="form-control" rows="3" required></textarea>
+                <textarea name="address" class="form-control" rows="3" required>{{ old('address') }}</textarea>
             </div>
+
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
             <button type="submit" class="btn btn-success">{{ __('messages.save') }}</button>
         </form>
     </div>

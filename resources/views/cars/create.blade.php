@@ -4,6 +4,7 @@
     <div class="container mt-4">
         <h2>{{ __('messages.add_new_car') }}</h2>
         <a href="{{ route('cars.index') }}" class="btn btn-secondary mb-3">{{ __('messages.back') }}</a>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0">
@@ -14,8 +15,9 @@
             </div>
         @endif
 
-        <form action="{{ route('cars.store') }}" method="POST">
+        <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
             <div class="mb-3">
                 <label for="reg_number" class="form-label">{{ __('messages.reg_number') }}</label>
                 <input type="text"
@@ -28,6 +30,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="brand" class="form-label">{{ __('messages.brand') }}</label>
                 <input type="text"
@@ -40,6 +43,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="model" class="form-label">{{ __('messages.model') }}</label>
                 <input type="text"
@@ -52,18 +56,39 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="owner_id" class="form-label">{{ __('messages.owner') }}</label>
                 <select name="owner_id" id="owner_id" class="form-select @error('owner_id') is-invalid @enderror">
-                    <option value="" selected disabled>{{ __('messages.select_owner') }}</option>
+                    @if($owners->count() > 1)
+                        <option value="" selected disabled>{{ __('messages.select_owner') }}</option>
+                    @endif
+
                     @foreach($owners as $owner)
-                        <option value="{{ $owner->id }}" {{ old('owner_id') == $owner->id ? 'selected' : '' }}>
+                        <option value="{{ $owner->id }}" {{ (old('owner_id') == $owner->id || $owners->count() === 1) ? 'selected' : '' }}>
                             {{ $owner->name }} {{ $owner->surname }}
                         </option>
                     @endforeach
                 </select>
                 @error('owner_id')
                 <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="photos" class="form-label fw-bold">{{ __('messages.upload_photos') ?? 'Įkelti nuotraukas' }}</label>
+                <input type="file"
+                       name="photos[]"
+                       id="photos"
+                       class="form-control @error('photos') is-invalid @enderror @error('photos.*') is-invalid @enderror"
+                       multiple
+                       accept="image/*">
+                <div class="form-text text-muted">Galite pasirinkti kelias nuotraukas iš karto (JPEG, PNG, JPG, GIF). Maks. 2MB.</div>
+                @error('photos')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+                @error('photos.*')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
             </div>
 

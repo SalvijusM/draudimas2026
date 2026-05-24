@@ -31,7 +31,7 @@
                     <td>{{ $owner->email }}</td>
                     <td>{{ $owner->address }}</td>
                     <td>
-                        @if(auth()->user()->role === 'admin')
+                        @if(auth()->user()->role === 'admin' || (auth()->user()->role === 'regular' && $owner->user_id === auth()->id()))
                             <a href="{{ route('owners.edit', $owner->id) }}" class="btn btn-sm btn-warning">{{ __('messages.edit') }}</a>
 
                             <form action="{{ route('owners.destroy', $owner->id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('messages.confirm_delete_owner') }}')">
